@@ -6,7 +6,19 @@ export interface Seat {
   reservedBy?: string;
 }
 
+function ensureSeatAvailable(seat: Seat): void {
+  if (seat.status === 'RESERVED') {
+    throw new Error('Seat is already reserved');
+  }
+}
+
 export function reserveSeat(seat: Seat, userId: string): void {
+  ensureSeatAvailable(seat);
   seat.status = 'RESERVED';
   seat.reservedBy = userId;
+}
+
+export function cancelReservation(seat: Seat): void {
+  seat.status = 'AVAILABLE';
+  delete seat.reservedBy;
 }
