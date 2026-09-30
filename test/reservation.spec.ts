@@ -1,17 +1,19 @@
 import { describe, test, expect } from 'vitest';
-import { calculatePrice } from '../src/reservation';
+import { Seat, reserveSeat } from '../src/reservation';
 
-describe('calculatePrice()', () => {
-  test('calculates normal ticket price', () => {
+describe('Seat Reservation', () => {
+  test('an available seat can be reserved', () => {
     // Arrange
-    const unitPrice = 100;
-    const quantity = 2;
-    const expected = 200; // Fixed from 20 to 200
+    const seat: Seat = {
+      id: 'A1',
+      status: 'AVAILABLE',
+    };
 
     // Act
-    const actual = calculatePrice(unitPrice, quantity);
+    reserveSeat(seat, 'U100');
 
     // Assert
-    expect(actual).toBe(expected);
+    expect(seat.status).toBe('RESERVED');
+    expect(seat.reservedBy).toBe('U100');
   });
 });
